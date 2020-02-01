@@ -4,9 +4,10 @@ import hmac
 import requests
 import base64
 import hashlib
+import json
 
 from slackeventsapi import SlackEventAdapter
-from slackclient import SlackClient
+from slack import WebClient
 
 from flask import Flask, jsonify, request
 
@@ -18,10 +19,7 @@ slack_events_adapter = SlackEventAdapter(slack_signing_secret, "/slack/events")
 
 # Create a SlackClient for your bot to use for Web API requests
 slack_bot_token = os.environ["SLACK_BOT_TOKEN"]
-slack_client = SlackClient(slack_bot_token)
-
-# Bind the Events API route to your existing Flask app
-slack_events_adapter = SlackEventAdapter(slack_signing_secret, "/slack/events", app)
+slack_client = WebClient(slack_bot_token)
 
 
 # Super simple. Slack pings with a request object,

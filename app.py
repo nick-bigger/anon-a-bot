@@ -25,7 +25,7 @@ def anon():
 
 def request_is_valid(request):
     try:
-        request_body = request.get_data()
+        request_body = request.get_data(as_text=True)
         timestamp = request.headers['X-Slack-Request-Timestamp']
         sig_basestring = 'v0:' + timestamp + ':' + request_body
 

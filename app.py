@@ -48,7 +48,8 @@ def handle_message(event_data):
 # Error events
 @slack_events_adapter.on("error")
 def error_handler(err):
-    print("ERROR: " + str(err))
+    error_message = "Sorry, something went wrong and I couldn't post that message. Try again in a second."
+    slack_client.chat_postMessage(channel=request.form['channel_id'], text=error_message)
 
 if __name__ == '__main__':
     app.run()

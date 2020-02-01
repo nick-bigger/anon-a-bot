@@ -1,10 +1,5 @@
 #!flask/bin/python
 import os
-import hmac
-import requests
-import base64
-import hashlib
-import json
 
 from slackeventsapi import SlackEventAdapter
 from slack import WebClient
@@ -23,7 +18,7 @@ slack_client = WebClient(slack_bot_token)
 
 
 # Super simple. Slack pings with a request object,
-# hit the webhook with the message that was sent
+# send a message back with the text that was recieved
 @app.route('/anon', methods=['POST'])
 def anon():
     slack_client.chat_postMessage(channel=request.form['channel_id'], text=request.form['text'])

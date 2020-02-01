@@ -42,7 +42,7 @@ def request_is_valid(request):
 
     slack_signature = request.headers['X-Slack-Signature']
 
-    dig = hmac.new(slack_signing_secret, msg=sig_basestring, digestmod=hashlib.sha256).digest() 
+    dig = hmac.new(slack_signing_secret.encode("utf-8"), msg=sig_basestring, digestmod=hashlib.sha256).digest() 
     my_signature = 'v0=' + base64.b64encode(dig).decode()
 
     return hmac.compare_digest(my_signature, slack_signature)
@@ -65,4 +65,4 @@ def error_handler(err):
     print("ERROR: " + str(err))
 
 if __name__ == '__main__':
-    app.run(port=3000)
+    app.run()

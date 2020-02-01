@@ -26,26 +26,14 @@ slack_client = WebClient(slack_bot_token)
 # hit the webhook with the message that was sent
 @app.route('/anon', methods=['POST'])
 def anon():
-    if request_is_valid(request) and 'ANONYMOUS_SLACK_WEBHOOK_URL' in os.environ:
-        data = {'text':request.form['text']}
-        requests.post(url=os.environ['ANONYMOUS_SLACK_WEBHOOK_URL'], data=json.dumps(data))
+    if 'ANONYMOUS_SLACK_WEBHOOK_URL' in os.environ:
+        # data = {'text':request.form['text']}
+        # requests.post(url=os.environ['ANONYMOUS_SLACK_WEBHOOK_URL'], data=json.dumps(data))
+        slack_client.api_call("chat.postMessage", channel=request.form['channel_id'], text=request.form['text'])
 
         return '', 200
 
     return '', 401
-
-
-def request_is_valid(request):
-    request_body = request.get_data(as_text=True)
-    timestamp = request.headers['X-Slack-Request-Timestamp']
-    sig_basestring = ('v0:' + timestamp + ':' + request_body).encode("UTF-8")
-
-    slack_signature = request.headers['X-Slack-Signature']
-
-    dig = hmac.new(slack_signing_secret.encode("utf-8"), msg=sig_basestring, digestmod=hashlib.sha256).digest() 
-    my_signature = 'v0=' + base64.b64encode(dig).decode()
-
-    return hmac.compare_digest(my_signature, slack_signature)
 
 
 # Example responder to greetings

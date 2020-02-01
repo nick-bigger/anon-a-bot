@@ -26,11 +26,8 @@ slack_client = WebClient(slack_bot_token)
 # hit the webhook with the message that was sent
 @app.route('/anon', methods=['POST'])
 def anon():
-    if 'ANONYMOUS_SLACK_WEBHOOK_URL' in os.environ:
-        slack_client.chat_postMessage(channel=request.form['channel_id'], text=request.form['text'])
-        return '', 200
-
-    return '', 401
+    slack_client.chat_postMessage(channel=request.form['channel_id'], text=request.form['text'])
+    return '', 200
 
 
 # Example responder to greetings

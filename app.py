@@ -27,10 +27,7 @@ slack_client = WebClient(slack_bot_token)
 @app.route('/anon', methods=['POST'])
 def anon():
     if 'ANONYMOUS_SLACK_WEBHOOK_URL' in os.environ:
-        # data = {'text':request.form['text']}
-        # requests.post(url=os.environ['ANONYMOUS_SLACK_WEBHOOK_URL'], data=json.dumps(data))
         slack_client.chat_postMessage(channel=request.form['channel_id'], text=request.form['text'])
-
         return '', 200
 
     return '', 401
@@ -41,15 +38,11 @@ def anon():
 def handle_message(event_data):
     message = event_data["event"]
 
-    channel = message["channel"]
-    message = "Hello <@%s>! :tada:" % message["user"]
-    slack_client.chat_postMessage(channel=channel, text=request.form['text'])
-
     # If the incoming message contains "hi", then respond with a "Hello" message
-    # if message.get("subtype") is None and "hi" in message.get('text'):
-    #     channel = message["channel"]
-    #     message = "Hello <@%s>! :tada:" % message["user"]
-    #     slack_client.api_call("chat.postMessage", channel=channel, as_user=True, text=message)
+    if message.get("subtype") is None and "hi" in message.get('text'):
+        channel = message["channel"]
+        message = "Hello <@%s>! :tada:" % message["user"]
+        slack_client.chat_postMessage(channel=channel, text=message)
 
 
 # Error events

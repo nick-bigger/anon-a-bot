@@ -27,10 +27,10 @@ def request_is_valid(request):
     try:
         request_body = request.get_data(as_text=True)
         timestamp = request.headers['X-Slack-Request-Timestamp']
-        sig_basestring = 'v0:' + timestamp + ':' + request_body
+        sig_basestring = ('v0:' + timestamp + ':' + request_body).encode("UTF-8")
 
         slack_signature = request.headers['X-Slack-Signature']
-        slack_signing_secret = os.environ['SLACK_SIGNING_SECRET']
+        slack_signing_secret = bytes(os.environ['SLACK_SIGNING_SECRET'], encoding="UTF-8")
 
         dig = hmac.new(slack_signing_secret, msg=sig_basestring, digestmod=hashlib.sha256).digest() 
         my_signature = 'v0=' + base64.b64encode(dig).decode()

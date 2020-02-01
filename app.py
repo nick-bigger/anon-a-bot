@@ -37,7 +37,7 @@ def anon():
 
 
 # Example responder to greetings
-@slack_events_adapter.on("message")
+@slack_events_adapter.on("app_mention")
 def handle_message(event_data):
     message = event_data["event"]
 

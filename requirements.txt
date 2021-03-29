@@ -62,7 +62,7 @@ psutil==5.6.5
 psycopg2==2.8.4
 pycurl==7.43.0.5
 pyee==7.0.1
-Pygments==2.4.2
+Pygments==2.7.4
 PyJWT==1.7.1
 pylint==2.3.1
 pyrsistent==0.15.5

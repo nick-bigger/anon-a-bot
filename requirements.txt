@@ -63,7 +63,7 @@ psycopg2==2.8.4
 pycurl==7.43.0.5
 pyee==7.0.1
 Pygments==2.4.2
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.3.1
 pyrsistent==0.15.5
 python-daemon==2.1.2
